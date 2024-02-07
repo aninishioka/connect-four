@@ -1,4 +1,7 @@
 /* game board table */
+:root {
+  --top-transform: -250px;
+}
 
 #board td {
   width: 50px;
@@ -6,13 +9,21 @@
   border: solid 1px #666;
 }
 
+@keyframes drop-down {
+  from {top: var(--top-transform)}
+  to {top: 0px}
+}
+
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
+  position: relative;
   margin: 5px;
   width: 80%;
   height: 80%;
   border-radius: 50%;
+  animation-name: drop-down;
+  animation-duration: 1.5s;
 }
 
 .p1 {

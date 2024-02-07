@@ -70,6 +70,10 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
+  let cellHeight = document.querySelector('#board td').clientHeight;
+  let distFromTop = (y + 1.5) * -cellHeight;
+  document.documentElement.style.setProperty('--top-transform', `${distFromTop}px`);
+
   const piece = document.createElement('div');
   piece.classList.add('piece', `p${currPlayer}`);
 
@@ -162,6 +166,10 @@ function handleClick(evt) {
 
 function setNextPlayer() {
   currPlayer = currPlayer === 1 ? 2 : 1;
+}
+
+function calculateDistanceFromTop() {
+
 }
 
 /** Start game. */
