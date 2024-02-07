@@ -88,12 +88,12 @@ function checkForWin() {
    */
   function _win(cells) {
 
-    for (let [y, x] of cells) {
-      if (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH) return false;
-      if (board[y][x] !== currPlayer) return false;
-    }
-
-    return true;
+    return cells.every((cell) => {
+      const [y, x] = cell;
+      const isValidCoord = y >= 0 && y < HEIGHT && x >= 0 && x < WIDTH;
+      const isCurrPlayer = isValidCoord && (board[y][x] === currPlayer);
+      return isValidCoord && isCurrPlayer;
+    });
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -161,7 +161,7 @@ function handleClick(evt) {
 /** Switch currPlayer between 1 and 2. */
 
 function setNextPlayer() {
-  currPlayer = (currPlayer === 1) ? 2 : 1;
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** Start game. */
