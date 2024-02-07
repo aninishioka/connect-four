@@ -18,9 +18,9 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard(height = HEIGHT, width = WIDTH) {
-  for (let i = 0; i < height; i++) {
-    const row = new Array(width).fill(null);
+function makeBoard() {
+  for (let y = 0; y < HEIGHT; y++) {
+    const row = new Array(WIDTH).fill(null);
     board.push(row);
   }
 }
@@ -143,6 +143,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update global `board` variable with new piece
+  placeInBoard(y, x);
   placeInTable(y, x);
 
   // check for win
@@ -152,9 +153,18 @@ function handleClick(evt) {
 
   // check for tie: if top row is filled, board is filled
   // TODO: check if all cells in board are filled; if so, call endGame
+  const topRow = board[0];
+  if (topRow.every(cell => cell !== null)) endGame();
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = (currPlayer === 1)? 2 : 1;
+}
+
+/** Places player piece in board cell with given x, y coordinate. */
+
+function placeInBoard(y, x) {
+  board[y][x] = currPlayer;
 }
 
 /** Start game. */
