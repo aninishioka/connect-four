@@ -70,7 +70,6 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
   const piece = document.createElement('div');
   piece.classList.add('piece', `p${currPlayer}`);
 
@@ -89,8 +88,6 @@ function checkForWin() {
    */
   function _win(cells) {
 
-    // TODO: Check four cells to see if they're all legal & all color of current
-    // player
     for (let [y, x] of cells) {
       if (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH) return false;
       if (board[y][x] !== currPlayer) return false;
@@ -104,7 +101,7 @@ function checkForWin() {
   // ways to win: horizontal, vertical, diagonalDR, diagonalDL
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      // TODO: assign values to the below variables for each of the ways to win
+      // assign values to the below variables for each of the ways to win
       // horizontal has been assigned for you
       // each should be an array of 4 cell coordinates:
       // [ [y, x], [y, x], [y, x], [y, x] ]
@@ -142,7 +139,6 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update global `board` variable with new piece
   placeInBoard(y, x);
   placeInTable(y, x);
 
@@ -152,19 +148,31 @@ function handleClick(evt) {
   }
 
   // check for tie: if top row is filled, board is filled
-  // TODO: check if all cells in board are filled; if so, call endGame
-  const topRow = board[0];
-  if (topRow.every(cell => cell !== null)) endGame();
+  if (checkForTie()) {
+    return endGame(`It's a tie!`);
+  }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
-  currPlayer = (currPlayer === 1)? 2 : 1;
+  setNextPlayer();
 }
 
 /** Places player piece in board cell with given x, y coordinate. */
 
 function placeInBoard(y, x) {
   board[y][x] = currPlayer;
+}
+
+/** Checks that entire board filled and no further moves can be made.  */
+
+function checkForTie() {
+  const topRow = board[0];
+  return topRow.every(cell => cell !== null);
+}
+
+/** Switch currPlayer between 1 and 2. */
+
+function setNextPlayer() {
+  currPlayer = (currPlayer === 1) ? 2 : 1;
 }
 
 /** Start game. */
