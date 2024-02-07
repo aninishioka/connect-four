@@ -9,6 +9,7 @@
 
 const WIDTH = 7;
 const HEIGHT = 6;
+const TIMEOUT = 1700;
 
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -126,7 +127,8 @@ function checkForWin() {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  alert(msg);
+  setTimeout(() => alert(msg), TIMEOUT);
+
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -166,6 +168,8 @@ function handleClick(evt) {
 function setNextPlayer() {
   currPlayer = currPlayer === 1 ? 2 : 1;
 }
+
+/** Calculates distance to header row to row y. */
 
 function calculateDistanceFromTop(y) {
   const cellHeight = document.querySelector('#board td').clientHeight;
