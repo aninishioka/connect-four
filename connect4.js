@@ -11,6 +11,9 @@ const WIDTH = 7;
 const HEIGHT = 6;
 const TIMEOUT = 1700;
 
+const RESTART_BUTTON = document.getElementById('restart_btn');
+RESTART_BUTTON.addEventListener('click', restart);
+
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 // (board[5][0] would be the bottom-left spot on the board)
@@ -71,6 +74,7 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
+  //get intial vertical transform value to allow for drop animation
   const distFromTop = calculateDistanceFromTop(y);
   document.documentElement.style.setProperty('--top-transform', `${distFromTop}px`);
 
@@ -128,7 +132,10 @@ function checkForWin() {
 
 function endGame(msg) {
   setTimeout(() => alert(msg), TIMEOUT);
-
+  //some experimentation with this?
+  // setTimeout(function () {
+  //   alert('You won!')
+  // }, TIMEOUT);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -181,6 +188,18 @@ function calculateDistanceFromTop(y) {
 function start() {
   makeBoard();
   makeHtmlBoard();
+}
+
+function restart() {
+  //clear game
+  const htmlBoard = document.getElementById('board');
+  htmlBoard.innerHTML = '';
+
+  //reset player to player 1
+  currPlayer = 1;
+
+  //start new game
+  start();
 }
 
 start();
